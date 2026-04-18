@@ -219,6 +219,24 @@ body:not(.theme-light) .glass-card {
 .text-primary { color: var(--text-primary); transition: color 0.5s ease; }
 .text-secondary { color: var(--text-secondary); transition: color 0.5s ease; }
 
+#focus-zone:fullscreen {
+    background: var(--bg-color);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#focus-zone:fullscreen > h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#focus-zone:fullscreen .glass-card {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
 .streak-badge {
     position: relative;
     display: inline-flex;

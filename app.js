@@ -68,6 +68,7 @@ function initPomodoro() {
     const focusInput = document.getElementById('pomodoro-focus-input');
     const breakInput = document.getElementById('pomodoro-break-input');
     const applyBtn = document.getElementById('pomodoro-apply');
+    const focusZone = document.getElementById('focus-zone');
 
     if (!ring || !timeEl) return;
     const ringRadius = Number(ring.getAttribute('r') || 60);
@@ -116,6 +117,24 @@ function initPomodoro() {
         isBreak = !isBreak;
         remaining = isBreak ? presets[activePreset].rest : presets[activePreset].focus;
         updateUI();
+
+        if (isBreak) {
+            exitFullscreen();
+        }
+    }
+
+    function requestFullscreen() {
+        if (!focusZone || document.fullscreenElement) return;
+        if (focusZone.requestFullscreen) {
+            focusZone.requestFullscreen().catch(() => {});
+        }
+    }
+
+    function exitFullscreen() {
+        if (!document.fullscreenElement) return;
+        if (document.exitFullscreen) {
+            document.exitFullscreen().catch(() => {});
+        }
     }
 
     function startTimer() {
@@ -123,6 +142,9 @@ function initPomodoro() {
         timerId = setInterval(tick, 1000);
         isRunning = true;
         toggleBtn.textContent = 'Pause';
+        if (!isBreak) {
+            requestFullscreen();
+        }
     }
 
     function pauseTimer() {
